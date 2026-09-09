@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Documents</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:linear-gradient(135deg,#eef2ff,#f8fafc);color:#172033;display:flex;align-items:center;justify-content:center;padding:24px}.card{width:min(520px,100%);background:#fff;border-radius:24px;padding:32px;box-shadow:0 18px 50px rgba(15,23,42,.12)}.icon{font-size:42px}h1{margin:10px 0 6px;font-size:30px}p{color:#64748b;line-height:1.55}.doc{margin-top:24px;padding:18px;border:1px solid #e2e8f0;border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:16px}button{border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;background:#172033;color:white}.small{font-size:13px;margin-top:24px}dialog{width:min(390px,calc(100% - 32px));border:0;border-radius:18px;padding:24px;box-shadow:0 20px 70px rgba(15,23,42,.3)}dialog::backdrop{background:rgba(15,23,42,.55)}input{width:100%;padding:13px;margin:12px 0;border:1px solid #cbd5e1;border-radius:10px;font-size:16px}.actions{display:flex;gap:10px;justify-content:flex-end}.cancel{background:#e2e8f0;color:#172033}#error{color:#b91c1c;min-height:20px;font-size:14px}
+</style>
+</head>
+<body>
+<main class="card">
+<div class="icon">📁</div>
+<h1>My Documents</h1>
+<p>Quick access to my personal documents.</p>
+<section class="doc">
+<div><strong>📄 My CV</strong><div class="small">Protected download</div></div>
+<button id="downloadBtn">Download</button>
+</section>
+<p class="small">Your CV remains in protected cloud storage. This page only provides a convenient way to reach it.</p>
+</main>
+<dialog id="passwordDialog">
+<form method="dialog" id="passwordForm">
+<h2>Enter PIN</h2><p>Enter the PIN to continue.</p>
+<input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter PIN" aria-label="PIN">
+<div id="error"></div>
+<div class="actions"><button type="button" class="cancel" id="cancelBtn">Cancel</button><button type="submit">Continue</button></div>
+</form>
+</dialog>
+<script>
+// IMPORTANT: A PIN stored in this HTML/JavaScript is NOT real security.
+// For real protection, use Proton Drive's password-protected share link.
+// Replace the value below with your Proton Drive protected sharing link.
+const CV_LINK = "PASTE_YOUR_PROTON_DRIVE_PROTECTED_LINK_HERE";
+const dialog=document.getElementById('passwordDialog'),form=document.getElementById('passwordForm'),pin=document.getElementById('pin'),error=document.getElementById('error');
+document.getElementById('downloadBtn').onclick=()=>{error.textContent='';pin.value='';dialog.showModal();setTimeout(()=>pin.focus(),50)};
+document.getElementById('cancelBtn').onclick=()=>dialog.close();
+form.addEventListener('submit',e=>{e.preventDefault();if(!CV_LINK.startsWith('https://')){error.textContent='Add your Proton Drive protected link first.';return}dialog.close();window.location.href=CV_LINK});
+</script>
+</body>
+</html>
